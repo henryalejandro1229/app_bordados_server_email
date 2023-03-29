@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 // routes
-app.use('/bordados_app_backend', require('./routes/index'));
+app.use('/bordados_app_backend', require('./routes'));
 
 app.listen(app.get('port'));
 console.log('Server on port', app.get('port'));
