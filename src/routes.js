@@ -24,7 +24,7 @@ router.post("/send-validate-email", async (req, res) => {
   const { email, id } = req.body;
   try {
     await transporter.sendMail({
-      from: "Fred Foo 👻 <20181136@uthh.edu.mx>",
+      from: "Sastrería los Pajaritos",
       to: email,
       subject: "Confirmación de cuenta",
       html: getCadenaValidateEmail(id),
@@ -39,7 +39,7 @@ router.post("/send-forgot-password", async (req, res) => {
   const { email, id } = req.body;
   try {
     await transporter.sendMail({
-      from: '"Fred Foo 👻" <20181136@uthh.edu.mx>',
+      from: "Sastrería los Pajaritos",
       to: email,
       subject: "Recuperación de contraseña",
       html: getCadenaForgotMail(id),
