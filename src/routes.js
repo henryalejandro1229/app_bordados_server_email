@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   secure: true, // true for 465, false for other ports
   auth: {
     user: "sastreria.pajaritos@gmail.com", // generated ethereal user
-    pass: "jqlefvotuvldeuhj", // generated ethereal password
+    pass: "nwuamuhuccitmlol", // generated ethereal password
   },
 });
 
@@ -24,9 +24,9 @@ router.post("/send-validate-email", async (req, res) => {
   const { email, id } = req.body;
   try {
     await transporter.sendMail({
-      from: "Sastrería los Pajaritos",
+      from: "Sastrería los Pajaritos <sastreria.pajaritos@gmail.com>",
       to: email,
-      subject: "Confirmación de cuenta",
+      subject: "Comfirma tu cuenta",
       html: getCadenaValidateEmail(id),
     });
   } catch (error) {
@@ -39,7 +39,7 @@ router.post("/send-forgot-password", async (req, res) => {
   const { email, id } = req.body;
   try {
     await transporter.sendMail({
-      from: "Sastrería los Pajaritos",
+      from: "Sastrería los Pajaritos <sastreria.pajaritos@gmail.com>",
       to: email,
       subject: "Recuperación de contraseña",
       html: getCadenaForgotMail(id),
