@@ -16,8 +16,8 @@ transporter.verify().then(() => {
   console.log("listo para enviar emails");
 });
 
-router.get("/home", (req, res) => {
-  res.send("hello");
+router.get("/", (req, res) => {
+  res.send("hello world");
 });
 
 router.post("/send-validate-email", async (req, res) => {
@@ -30,7 +30,7 @@ router.post("/send-validate-email", async (req, res) => {
       html: getCadenaValidateEmail(id),
     });
   } catch (error) {
-    return res.status(400).json({ message: "Error al consultar" });
+    return res.status(400).json({ message: "Error al enviar email validator" });
   }
   res.status(200).json({});
 });
@@ -45,7 +45,7 @@ router.post("/send-forgot-password", async (req, res) => {
       html: getCadenaForgotMail(id),
     });
   } catch (error) {
-    return res.status(400).json({ message: "Error al consultar" });
+    return res.status(400).json({ message: "Error al enviar email" });
   }
   res.status(200).json({});
 });
