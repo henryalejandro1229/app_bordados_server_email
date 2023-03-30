@@ -45,7 +45,7 @@ router.post("/send-forgot-password", async (req, res) => {
       html: getCadenaForgotMail(id),
     });
   } catch (error) {
-    return res.status(400).json({ message: "Error al enviar email" });
+    return res.status(400).json({ message: "Error al enviar email", err : error });
   }
   res.status(200).json({});
 });
