@@ -1,14 +1,15 @@
 const { Router } = require("express");
 const router = Router();
 const nodemailer = require("nodemailer");
+const userEmail = "empresa@sastrerialospajaritos.proyectowebuni.com";
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp.hostinger.com",
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-    user: "sastrerialospajaritos@gmail.com", // generated ethereal user
-    pass: "qmxptgjawgekmhms", // generated ethereal password
+    user: userEmail , // generated ethereal user
+    pass: "LosPajaritos/3", // generated ethereal password
     // user: "sastreria.pajaritos@gmail.com", // generated ethereal user
     // pass: "nwuamuhuccitmlol", // generated ethereal password
   },
@@ -23,13 +24,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/send-validate-email", async (req, res) => {
-  const { email, id } = req.body;
+  const { email, id, verificationCode } = req.body;
   try {
     await transporter.sendMail({
-      from: "Sastrería los Pajaritos <sastreria.pajaritos@gmail.com>",
+      from: `Sastrería los Pajaritos ${userEmail }`,
       to: email,
-      subject: "Comfirma tu cuenta",
-      html: getCadenaValidateEmail(id),
+      subject: "Confirma tu cuenta",
+      html: getCadenaValidateEmail(id, verificationCode),
     });
   } catch (error) {
     return res.status(400).json({ message: "Error al enviar email validator" });
@@ -41,7 +42,7 @@ router.post("/send-forgot-password", async (req, res) => {
   const { email, id } = req.body;
   try {
     await transporter.sendMail({
-      from: "Sastrería los Pajaritos <sastreria.pajaritos@gmail.com>",
+      from: `Sastrería los Pajaritos ${userEmail }`,
       to: email,
       subject: "Recuperación de contraseña",
       html: getCadenaForgotMail(id),
@@ -129,7 +130,7 @@ function getCadenaForgotMail(id) {
                           line-height: 24px;
                           font-family: Arial, sans-serif;
                         ">
-                      <a href="http://sastrerialospajaritos.proyectowebuni.com/#/home/reset-password?id=${id}" style="color: #ee4c50; text-decoration: underline">Recuperar mi
+                      <a href="http://sastrerialospajaritos.proyectowebuni.com/#/home/reset-password?id=${id}" style="color: #F89D9B; text-decoration: underline">Recuperar mi
                         contraseña</a>
                     </p>
                     <p style="
@@ -209,7 +210,7 @@ function getCadenaForgotMail(id) {
 `;
 }
 
-function getCadenaValidateEmail(id) {
+function getCadenaValidateEmail(id, verificationCode) {
   return `
   <html>
 
@@ -280,13 +281,30 @@ function getCadenaValidateEmail(id) {
                         Solo tienes que hacer clic en el enlace inferior.
                       </p>
                       <p style="
-                            margin: 0;
+                            margin-bottom: 10px;
                             font-size: 16px;
                             line-height: 24px;
                             font-family: Arial, sans-serif;
                           ">
-                        <a href="http://sastrerialospajaritos.proyectowebuni.com/#/home/singup-process?id=${id}"  style="color: #ee4c50; text-decoration: underline">Confirmar
+                        <a href="http://sastrerialospajaritos.proyectowebuni.com/#/home/singup-process?id=${id}"  style="color: #F89D9B; text-decoration: underline">Confirmar
                           email</a>
+                      </p>
+                      <p style="
+                            margin: 0 0 20px 0;
+                            font-size: 16px;
+                            line-height: 24px;
+                            font-family: Arial, sans-serif;
+                          ">
+                        ó ingresar el siguiente código en la app:
+                      </p>
+                      <p style="
+                            margin: 0;
+                            font-size: 30px;
+                            line-height: 24px;
+                            font-family: Arial, sans-serif;
+                            font-weight: 600
+                          ">
+                       ${verificationCode} 
                       </p>
                     </td>
                   </tr>
