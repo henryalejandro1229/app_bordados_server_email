@@ -142,6 +142,8 @@ router.post("/push-notification-masiva", async (req, res) => {
 router.post("/send-push-notification", async (req, res) => {
   const { token, payload } = req.body;
   const pushSubscription = token;
+  console.log(token);
+  console.log(payload);
 
   webpush
     .sendNotification(pushSubscription, JSON.stringify(payload))
