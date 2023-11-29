@@ -118,11 +118,7 @@ router.post("/subscribe", (req, res) => {
 
 // Funcion para enviar notificaciones push masivas
 router.post("/push-notification-masiva", async (req, res) => {
-  const { type } = req.body; // tipo de notificación
-
-  // Busca el tipo de notificación
-  const payload = payloads.find((payload) => payload.name === type);
-  if (!payload) return;
+  const { payload } = req.body; // tipo de notificación
   if (subscriptions.length === 0) return;
 
   // Recorre las suscripciones y las notifica
@@ -130,7 +126,7 @@ router.post("/push-notification-masiva", async (req, res) => {
     webpush
       .sendNotification(
         JSON.parse(subscription)["token"],
-        JSON.stringify(payload.notification)
+        JSON.stringify(payload)
       )
       .then((res) => {
         console.log("Enviado masivo !!");
@@ -144,13 +140,11 @@ router.post("/push-notification-masiva", async (req, res) => {
 });
 
 router.post("/send-push-notification", async (req, res) => {
-  const { token, type } = req.body;
+  const { token, payload } = req.body;
   const pushSubscription = token;
-  const payload = payloads.find((payload) => payload.name === type);
-  if (!payload) return;
 
   webpush
-    .sendNotification(pushSubscription, JSON.stringify(payload.notification))
+    .sendNotification(pushSubscription, JSON.stringify(payload))
     .then((res) => {
       console.log("Enviado !!");
     })
